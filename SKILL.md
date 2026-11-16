@@ -11,7 +11,7 @@ Use Kakao's Korean place index and current automobile routing data to ground tra
 
 - Run `python3 scripts/kakao_api.py ...` from this skill directory.
 - Read the REST key from `KAKAO_REST_API_KEY`. Never print, persist, or place it in a URL or command argument.
-- If the key is absent, explain how to create a Kakao Developers app and set the environment variable. `--dry-run` may be used without a key to inspect a request safely.
+- If the key is absent, direct the user to [docs/rest-api-key-setup.md](docs/rest-api-key-setup.md) and explain how to set the environment variable. `--dry-run` may be used without a key to inspect a request safely.
 - Treat API responses as current observations. Do not imply that search ranking, road traffic, availability, or business details remain fixed.
 
 ## Choose the operation

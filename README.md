@@ -51,9 +51,9 @@ rsync -a --exclude .git kakao-navigation-skill/ ~/.codex/skills/kakao-navigation
 
 ## 配置 Kakao API
 
-1. 在 [Kakao Developers](https://developers.kakao.com/) 创建应用。
-2. 创建或选择 REST API Key，并按实际环境配置允许的服务信息或 IP 限制。
-3. 只通过运行环境注入密钥：
+请按照 [Kakao REST API Key 申请与配置教程](docs/rest-api-key-setup.md) 完成账号、应用、Kakao Map API、REST API Key、允许 IP 和调用验证配置。教程已根据 Kakao 2025 年应用密钥菜单改版及 2026 年 Map API 额度规则更新。
+
+配置完成后，只通过运行环境注入密钥：
 
 ```bash
 export KAKAO_REST_API_KEY='your-rest-api-key'
@@ -113,6 +113,7 @@ python3 scripts/kakao_api.py directions --help
 .
 ├── SKILL.md                    Agent 入口与决策规则
 ├── agents/openai.yaml          Skill 界面元数据
+├── docs/                       REST API Key 三语申请教程
 ├── references/
 │   ├── local-api.md            Kakao Local API 参考
 │   ├── navigation-api.md       Kakao Mobility 路线 API 参考

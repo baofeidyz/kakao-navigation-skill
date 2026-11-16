@@ -51,9 +51,9 @@ Restart the agent or begin a new turn so it can discover the new skill.
 
 ## Configure Kakao access
 
-1. Create an application in [Kakao Developers](https://developers.kakao.com/).
-2. Create or select a REST API key and configure its allowed service information/IP restrictions as appropriate.
-3. Export it only in the runtime environment:
+Follow the [Kakao REST API key application and configuration tutorial](docs/rest-api-key-setup.en.md) to configure the account, application, Kakao Map API, REST API key, allowed IPs, and verification calls. It reflects Kakao's 2025 app-key menu migration and 2026 Map API quota changes.
+
+After setup, export the key only in the runtime environment:
 
 ```bash
 export KAKAO_REST_API_KEY='your-rest-api-key'
@@ -113,6 +113,7 @@ python3 scripts/kakao_api.py directions --help
 .
 ├── SKILL.md                    Agent entry point and decision guidance
 ├── agents/openai.yaml          Skill UI metadata
+├── docs/                       Trilingual REST API key setup tutorial
 ├── references/
 │   ├── local-api.md            Kakao Local API reference
 │   ├── navigation-api.md       Kakao Mobility Directions reference
