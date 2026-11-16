@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kakao Navigation"
+  short_description: "Plan accurate Korean places and driving routes"
+  default_prompt: "Use $kakao-navigation to research Korean places and build an evidence-based itinerary."
