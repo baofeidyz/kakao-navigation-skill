@@ -1,12 +1,14 @@
 # Kakao Navigation Skill
 
-An agent skill for reliable South Korea place research and automobile route planning with the official Kakao Local and Kakao Mobility REST APIs.
+**中文** | [English](README.en.md) | [한국어](README.ko.md)
 
-It helps AI agents resolve Korean places, disambiguate branches, geocode addresses, find nearby facilities, compare driving times, plan multi-stop routes, and use future-departure estimates without inventing unsupported walking or public-transit results.
+这是一个面向 AI Agent 的韩国地点检索与汽车路线规划 Skill，基于 Kakao Local 和 Kakao Mobility 官方 REST API。
 
-## Install with an AI agent
+它能帮助 Agent 准确识别韩国地点、区分同名地点和连锁店分店、解析地址、检索周边设施、比较驾车时间、规划多站路线并查询未来出发时间，避免凭空猜测坐标或把汽车路线误当成步行、公交路线。
 
-Give the repository URL to a skill-capable coding agent. For example:
+## 让 AI Agent 安装
+
+直接把仓库地址交给支持 Skill 的 Agent，例如：
 
 ```text
 帮我安装这个 skill：https://github.com/baofeidyz/kakao-navigation-skill
@@ -16,17 +18,17 @@ Give the repository URL to a skill-capable coding agent. For example:
 Install this skill: https://github.com/baofeidyz/kakao-navigation-skill
 ```
 
-### Instructions for AI agents
+### 给 AI Agent 的安装说明
 
-When a user asks to install this repository as a skill:
+当用户要求把本仓库安装为 Skill 时：
 
-1. Treat the repository root as the skill directory because `SKILL.md` is at the root.
-2. Install it as `kakao-navigation` in the agent's normal skills directory.
-3. Do not copy `.git`, local caches, `.env` files, or credentials.
-4. Tell the user that `KAKAO_REST_API_KEY` must be configured separately and that the skill becomes discoverable on the agent's next turn or session, according to the host agent.
-5. Never ask the user to commit a REST API key to this repository.
+1. 仓库根目录就是 Skill 目录，因为根目录包含 `SKILL.md`。
+2. 将它以 `kakao-navigation` 的名称安装到当前 Agent 的标准 Skills 目录。
+3. 不要复制 `.git`、本地缓存、`.env` 或任何凭据。
+4. 告知用户需要单独配置 `KAKAO_REST_API_KEY`；根据宿主 Agent 的机制，新 Skill 通常在下一轮对话或重启后生效。
+5. 不要要求用户把 REST API Key 提交到仓库。
 
-For Codex installations using the built-in skill installer, the equivalent deterministic command is:
+使用 Codex 内置 Skill Installer 时，等价的确定性命令是：
 
 ```bash
 python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-installer/scripts/install-skill-from-github.py" \
@@ -35,9 +37,9 @@ python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-installer/scripts/inst
   --name kakao-navigation
 ```
 
-If `CODEX_HOME` is unset, it normally defaults to `~/.codex`. The installer aborts rather than overwriting an existing skill; remove or update the existing installation deliberately.
+如果目标目录已经存在，安装器会停止而不是覆盖已有 Skill。更新或移除旧版本应由用户明确执行。
 
-### Manual installation
+### 手动安装
 
 ```bash
 git clone https://github.com/baofeidyz/kakao-navigation-skill.git
@@ -45,35 +47,35 @@ mkdir -p ~/.codex/skills
 rsync -a --exclude .git kakao-navigation-skill/ ~/.codex/skills/kakao-navigation/
 ```
 
-Restart the agent or begin a new turn so it can discover the new skill.
+安装后重启 Agent，或开始新一轮对话，让 Agent 重新发现 Skill。
 
-## Configure Kakao access
+## 配置 Kakao API
 
-1. Create an application in [Kakao Developers](https://developers.kakao.com/).
-2. Create or select a REST API key and configure its allowed service information/IP restrictions as appropriate.
-3. Export it only in the runtime environment:
+1. 在 [Kakao Developers](https://developers.kakao.com/) 创建应用。
+2. 创建或选择 REST API Key，并按实际环境配置允许的服务信息或 IP 限制。
+3. 只通过运行环境注入密钥：
 
 ```bash
 export KAKAO_REST_API_KEY='your-rest-api-key'
 ```
 
-Do not put the key in prompts, screenshots, shell history, `.env` files committed to Git, or example commands. If a key is exposed, rotate it in Kakao Developers.
+不要把密钥放进提示词、截图、Shell 历史、提交到 Git 的 `.env` 或示例命令中。如果密钥已经暴露，请立即在 Kakao Developers 中轮换。
 
-## What the skill supports
+## 支持能力
 
-- Keyword and category-based Kakao place search
-- Address geocoding and reverse geocoding
-- Administrative-region lookup and coordinate conversion
-- Current automobile directions with up to five waypoints
-- Future-departure automobile directions
-- Multi-waypoint, multi-origin, and multi-destination route requests
-- Travel-planning guidance that separates API evidence from planner assumptions
+- 关键词地点搜索和分类周边搜索
+- 地址正向解析与坐标反向解析
+- 行政区查询和坐标系转换
+- 最多包含 5 个经停点的当前汽车路线
+- 指定未来出发时间的汽车路线
+- 多经停点、多起点和多目的地路线请求
+- 将 Kakao API 证据与行程规划推断明确分开的旅游规划方法
 
-The public Kakao REST APIs covered here do **not** provide pedestrian or public-transit routing. The skill will not relabel automobile estimates as walking, subway, or bus results.
+这里使用的 Kakao 公开 REST API **不提供步行或公共交通路线**。Skill 不会把汽车预计时间标记为步行、地铁或公交结果。
 
-## CLI examples
+## CLI 示例
 
-Run commands from the installed skill directory:
+在安装后的 Skill 目录执行：
 
 ```bash
 python3 scripts/kakao_api.py keyword '경복궁' --size 3
@@ -91,38 +93,38 @@ python3 scripts/kakao_api.py directions \
   --summary true
 ```
 
-Inspect a request without a key or network call:
+无需密钥或网络即可检查请求构造：
 
 ```bash
 python3 scripts/kakao_api.py --dry-run keyword '경복궁 맛집' \
   --x 126.9769 --y 37.5776 --radius 1500 --sort distance
 ```
 
-For all options:
+查看全部参数：
 
 ```bash
 python3 scripts/kakao_api.py --help
 python3 scripts/kakao_api.py directions --help
 ```
 
-## Repository layout
+## 仓库结构
 
 ```text
 .
-├── SKILL.md                    Agent entry point and decision guidance
-├── agents/openai.yaml          Skill UI metadata
+├── SKILL.md                    Agent 入口与决策规则
+├── agents/openai.yaml          Skill 界面元数据
 ├── references/
-│   ├── local-api.md            Kakao Local API reference
-│   ├── navigation-api.md       Kakao Mobility Directions reference
-│   └── travel-planning.md      Evidence-based itinerary rules
+│   ├── local-api.md            Kakao Local API 参考
+│   ├── navigation-api.md       Kakao Mobility 路线 API 参考
+│   └── travel-planning.md      基于证据的行程规划规则
 └── scripts/
-    ├── kakao_api.py            Dependency-free REST CLI
-    └── test_kakao_api.py       Request-construction tests
+    ├── kakao_api.py            无第三方依赖的 REST CLI
+    └── test_kakao_api.py       请求构造测试
 ```
 
-## Validate before release
+## 发布前验证
 
-The CLI uses only the Python standard library.
+CLI 只使用 Python 标准库：
 
 ```bash
 python3 -m unittest -v scripts/test_kakao_api.py
@@ -130,25 +132,23 @@ python3 -m py_compile scripts/kakao_api.py scripts/test_kakao_api.py
 python3 scripts/kakao_api.py --dry-run keyword '경복궁'
 ```
 
-If Codex's `skill-creator` is installed, also run:
+如果已经安装 Codex `skill-creator`，还可以执行：
 
 ```bash
 python3 "${CODEX_HOME:-$HOME/.codex}/skills/.system/skill-creator/scripts/quick_validate.py" .
 ```
 
-Live API tests require `KAKAO_REST_API_KEY` and may consume account quota. Never run them in CI with an untrusted pull request context.
+真实 API 测试需要 `KAKAO_REST_API_KEY`，并可能消耗账户额度。不要在不受信任的 Pull Request CI 环境中运行真实接口测试。
 
-## Sources and maintenance
-
-The endpoint assumptions are based on the current official documentation:
+## 官方资料与维护
 
 - [Kakao Local REST API](https://developers.kakao.com/docs/latest/ko/local/dev-guide)
-- [Kakao Mobility Directions API](https://developers.kakaomobility.com/guide/navi-api/start)
-- [Driving directions](https://developers.kakaomobility.com/guide/navi-api/directions)
-- [Future driving directions](https://developers.kakaomobility.com/guide/navi-api/future)
+- [Kakao Mobility 路线 API](https://developers.kakaomobility.com/guide/navi-api/start)
+- [汽车路线](https://developers.kakaomobility.com/guide/navi-api/directions)
+- [未来汽车路线](https://developers.kakaomobility.com/guide/navi-api/future)
 
-Before changing endpoint hosts, request fields, limits, or authentication behavior, verify them against the official documentation. The older [`CaChiJ/kakao-navigation-mcp-server`](https://github.com/CaChiJ/kakao-navigation-mcp-server) informed the initial use cases, but this skill does not inherit its unsupported claim of walking-route support.
+修改接口域名、请求字段、数量限制或鉴权规则前，应重新核对官方文档。较早的 [`CaChiJ/kakao-navigation-mcp-server`](https://github.com/CaChiJ/kakao-navigation-mcp-server) 为初始使用场景提供了参考，但本 Skill 没有继承其中未经实际接口支持的“步行路线”描述。
 
-## License
+## 开源协议
 
 [MIT](LICENSE)
